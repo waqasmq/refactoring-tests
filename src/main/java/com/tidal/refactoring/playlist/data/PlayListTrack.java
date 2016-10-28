@@ -13,11 +13,10 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
     private static final long serialVersionUID = 5464240796158432162L;
 
     private Integer id;
-    private TrackPlayList profileTrackPlayList;
+    private PlayList profileTrackPlayList;
     private int trackArtistId;
     private int index;
     private Date dateAdded;
-    private SharingLevel sharingLevel;
     private String description;
     private int trackId;
     private String isrc;
@@ -44,11 +43,11 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         this.trackId = trackId;
     }
 
-    public TrackPlayList getTrackPlayList() {
+    public PlayList getTrackPlayList() {
         return profileTrackPlayList;
     }
 
-    public void setTrackPlaylist(TrackPlayList profileTrackPlayList) {
+    public void setTrackPlaylist(PlayList profileTrackPlayList) {
         this.profileTrackPlayList = profileTrackPlayList;
     }
 
@@ -88,15 +87,6 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         return this.getIndex() - o.getIndex();
     }
 
-    public SharingLevel getSharingLevel() {
-        return sharingLevel;
-    }
-
-    public void setSharingLevel(SharingLevel sharingLevel) {
-        this.sharingLevel = sharingLevel;
-    }
-
-
     public String getDescription() {
         return description;
     }
@@ -119,7 +109,7 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         if (trackId != that.trackId) return false;
         if (dateAdded != null ? !dateAdded.equals(that.dateAdded) : that.dateAdded != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        return !(id != null ? !id.equals(that.id) : that.id != null) && sharingLevel == that.sharingLevel;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
 
     }
 
@@ -129,7 +119,6 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         result = 31 * result + trackArtistId;
         result = 31 * result + index;
         result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
-        result = 31 * result + (sharingLevel != null ? sharingLevel.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + trackId;
         return result;

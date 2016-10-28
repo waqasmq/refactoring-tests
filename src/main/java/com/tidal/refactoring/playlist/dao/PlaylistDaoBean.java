@@ -1,11 +1,10 @@
 package com.tidal.refactoring.playlist.dao;
 
-import java.util.*;
+import java.util.*; 
 
 import com.tidal.refactoring.playlist.data.PlayListTrack;
-import com.tidal.refactoring.playlist.data.SharingLevel;
 import com.tidal.refactoring.playlist.data.Track;
-import com.tidal.refactoring.playlist.data.TrackPlayList;
+import com.tidal.refactoring.playlist.data.PlayList;
 
 /**
  * Class faking the data layer, and returning fake playlists
@@ -19,19 +18,16 @@ public class PlaylistDaoBean {
      * @param userId
      * @return
      */
-    public TrackPlayList getPlaylistByUUID(String uuid, int userId) {
-        TrackPlayList trackPlayList = new TrackPlayList();
+    public PlayList getPlaylistByUUID(String uuid, int userId) {
+        PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
-        trackPlayList.setDescription("The mother of all playlists");
         trackPlayList.setDuration((float) (60 * 60 * 2));
         trackPlayList.setId(49834);
         trackPlayList.setLastUpdated(new Date());
         trackPlayList.setNrOfTracks(376);
         trackPlayList.setPlayListName("Collection of great songs");
         trackPlayList.setPlayListTracks(getPlaylistTracks());
-        trackPlayList.setUserId(userId);
-        trackPlayList.setSharingLevel(SharingLevel.PUBLIC);
         trackPlayList.setUuid(uuid);
 
         return trackPlayList;
@@ -46,7 +42,6 @@ public class PlaylistDaoBean {
             playListTrack.setDescription("A description");
             playListTrack.setId(i + 1);
             playListTrack.setIndex(i);
-            playListTrack.setSharingLevel(SharingLevel.PUBLIC);
             playListTrack.setTrack(getTrack());
 
         }

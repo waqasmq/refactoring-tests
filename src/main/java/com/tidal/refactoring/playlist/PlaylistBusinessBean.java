@@ -1,10 +1,10 @@
 package com.tidal.refactoring.playlist;
 
-import com.google.inject.Inject;
+import com.google.inject.Inject; 
 import com.tidal.refactoring.playlist.dao.PlaylistDaoBean;
 import com.tidal.refactoring.playlist.data.PlayListTrack;
 import com.tidal.refactoring.playlist.data.Track;
-import com.tidal.refactoring.playlist.data.TrackPlayList;
+import com.tidal.refactoring.playlist.data.PlayList;
 import com.tidal.refactoring.playlist.exception.PlaylistException;
 
 import java.util.*;
@@ -28,7 +28,7 @@ public class PlaylistBusinessBean {
 
         try {
 
-            TrackPlayList playList = playlistDaoBean.getPlaylistByUUID(uuid, userId);
+            PlayList playList = playlistDaoBean.getPlaylistByUUID(uuid, userId);
 
             //We do not allow > 500 tracks in new playlists
             if (playList.getNrOfTracks() + tracksToAdd.size() > 500) {
@@ -36,8 +36,9 @@ public class PlaylistBusinessBean {
             }
 
             // The index is out of bounds, put it in the end of the list.
-            if (toIndex > playList.getPlayListTracksSize() || toIndex == -1) {
-                toIndex = playList.getPlayListTracksSize();
+            int size = playList.getPlayListTracks() == null ? 0 : playList.getPlayListTracks().size();
+            if (toIndex > size || toIndex == -1) {
+                toIndex = size;
             }
 
             if (!validateIndexes(toIndex, playList.getNrOfTracks())) {
@@ -89,7 +90,7 @@ public class PlaylistBusinessBean {
         return toIndex >= 0 && toIndex <= length;
     }
 
-    private float addTrackDurationToPlaylist(TrackPlayList playList, Track track) {
+    private float addTrackDurationToPlaylist(PlayList playList, Track track) {
         return (track != null ? track.getDuration() : 0)
                 + (playList != null && playList.getDuration() != null ? playList.getDuration() : 0);
     }
