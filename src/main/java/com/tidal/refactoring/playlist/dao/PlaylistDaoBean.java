@@ -10,16 +10,23 @@ import com.tidal.refactoring.playlist.data.PlayList;
  * Class faking the data layer, and returning fake playlists
  */
 public class PlaylistDaoBean {
+	
+	private final Map<String, PlayList> playlists = new HashMap<String, PlayList>(); 
 
-    /**
-     * Returning fake TrackPlaylist
-     *
-     * @param uuid
-     * @param userId
-     * @return
-     */
     public PlayList getPlaylistByUUID(String uuid) {
-        PlayList trackPlayList = new PlayList();
+
+    	PlayList playList = playlists.get(uuid);
+    	
+    	if (playList != null) {
+    		return playList;
+    	}
+    	
+    	//return default playlist
+        return createPlayList(uuid);
+    }
+
+	private PlayList createPlayList(String uuid) {
+		PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
         trackPlayList.setDuration((float) (60 * 60 * 2));
@@ -31,7 +38,7 @@ public class PlaylistDaoBean {
         trackPlayList.setUuid(uuid);
 
         return trackPlayList;
-    }
+	}
 
     private static Set<PlayListTrack> getPlaylistTracks() {
 
