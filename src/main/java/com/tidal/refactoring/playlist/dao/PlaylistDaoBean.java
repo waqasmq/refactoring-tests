@@ -18,7 +18,7 @@ public class PlaylistDaoBean {
      * @param userId
      * @return
      */
-    public PlayList getPlaylistByUUID(String uuid, int userId) {
+    public PlayList getPlaylistByUUID(String uuid) {
         PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
@@ -39,7 +39,6 @@ public class PlaylistDaoBean {
         for (int i = 0; i < 376; i++) {
             PlayListTrack playListTrack = new PlayListTrack();
             playListTrack.setDateAdded(new Date());
-            playListTrack.setDescription("A description");
             playListTrack.setId(i + 1);
             playListTrack.setIndex(i);
             playListTrack.setTrack(getTrack());

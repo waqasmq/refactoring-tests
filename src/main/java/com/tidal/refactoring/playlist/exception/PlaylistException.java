@@ -6,7 +6,10 @@ package com.tidal.refactoring.playlist.exception;
  * Time: 12.52
  */
 public class PlaylistException extends RuntimeException {
-    public PlaylistException(String s) {
+
+	private static final long serialVersionUID = 759495431208011733L;
+
+	public PlaylistException(String s) {
         super(s);
     }
 }

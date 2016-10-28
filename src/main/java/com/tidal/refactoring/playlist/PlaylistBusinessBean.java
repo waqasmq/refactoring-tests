@@ -23,12 +23,14 @@ public class PlaylistBusinessBean {
         this.playlistDaoBean = playlistDaoBean;
     }
 
-    List<PlayListTrack> addTracks(String uuid, int userId, List<Track> tracksToAdd, int toIndex,
-                                  Date lastUpdated) throws PlaylistException {
+    /**
+     * Add tracks to the index
+     */
+    List<PlayListTrack> addTracks(String uuid, List<Track> tracksToAdd, int toIndex) throws PlaylistException {
 
         try {
 
-            PlayList playList = playlistDaoBean.getPlaylistByUUID(uuid, userId);
+            PlayList playList = playlistDaoBean.getPlaylistByUUID(uuid);
 
             //We do not allow > 500 tracks in new playlists
             if (playList.getNrOfTracks() + tracksToAdd.size() > 500) {
@@ -60,8 +62,7 @@ public class PlaylistBusinessBean {
                 PlayListTrack playlistTrack = new PlayListTrack();
                 playlistTrack.setTrack(track);
                 playlistTrack.setTrackPlaylist(playList);
-                playlistTrack.setTrackArtistId(track.getArtistId());
-                playlistTrack.setDateAdded(lastUpdated);
+                playlistTrack.setDateAdded(new Date());
                 playlistTrack.setTrack(track);
                 playList.setDuration(addTrackDurationToPlaylist(playList, track));
                 original.add(toIndex, playlistTrack);
@@ -85,6 +86,14 @@ public class PlaylistBusinessBean {
             throw new PlaylistException("Generic error");
         }
     }
+    
+	/**
+	 * Remove the tracks from the playlist located at the sent indexes
+	 */
+	List<PlayListTrack> removeTracks(String uuid, List<Integer> indexes) throws PlaylistException {
+		// TODO
+		return Collections.EMPTY_LIST;
+	}
 
     private boolean validateIndexes(int toIndex, int length) {
         return toIndex >= 0 && toIndex <= length;

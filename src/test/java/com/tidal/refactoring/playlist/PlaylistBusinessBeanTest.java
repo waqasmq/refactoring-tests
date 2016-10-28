@@ -1,6 +1,6 @@
 package com.tidal.refactoring.playlist;
 
-import com.google.inject.Inject;
+import com.google.inject.Inject; 
 import com.tidal.refactoring.playlist.PlaylistBusinessBean;
 import com.tidal.refactoring.playlist.data.PlayListTrack;
 import com.tidal.refactoring.playlist.data.Track;
@@ -11,7 +11,6 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +49,7 @@ public class PlaylistBusinessBeanTest {
 
         trackList.add(track);
 
-        List<PlayListTrack> playListTracks = playlistBusinessBean.addTracks(UUID.randomUUID().toString(), 1, trackList, 5, new Date());
+        List<PlayListTrack> playListTracks = playlistBusinessBean.addTracks(UUID.randomUUID().toString(), trackList, 5);
 
         assertTrue(playListTracks.size() > 0);
     }

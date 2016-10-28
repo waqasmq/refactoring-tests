@@ -14,12 +14,9 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
 
     private Integer id;
     private PlayList profileTrackPlayList;
-    private int trackArtistId;
     private int index;
     private Date dateAdded;
-    private String description;
     private int trackId;
-    private String isrc;
 
     private Track track;
 
@@ -67,14 +64,6 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         this.index = index;
     }
 
-    public int getTrackArtistId() {
-        return trackArtistId;
-    }
-
-    public void setTrackArtistId(int trackArtistId) {
-        this.trackArtistId = trackArtistId;
-    }
-
     public Date getDateAdded() {
         return dateAdded;
     }
@@ -87,15 +76,6 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         return this.getIndex() - o.getIndex();
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -105,10 +85,8 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
         PlayListTrack that = (PlayListTrack) o;
 
         if (index != that.index) return false;
-        if (trackArtistId != that.trackArtistId) return false;
         if (trackId != that.trackId) return false;
         if (dateAdded != null ? !dateAdded.equals(that.dateAdded) : that.dateAdded != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
         return !(id != null ? !id.equals(that.id) : that.id != null);
 
     }
@@ -116,15 +94,13 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + trackArtistId;
         result = 31 * result + index;
         result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + trackId;
         return result;
     }
 
     public String toString() {
-        return "PlayListTrack id[" + getId() + "], description[" + getDescription() + "]";
+        return "PlayListTrack id[" + getId() + "], trackId[" + getTrackId() + "]";
     }
 }
