@@ -1,11 +1,11 @@
-package com.tidal.playlist;
+package com.tidal.refactoring.playlist;
 
 import com.google.inject.Inject;
-import com.tidal.playlist.dao.PlaylistDaoBean;
-import com.tidal.playlist.data.PlayListTrack;
-import com.tidal.playlist.data.Track;
-import com.tidal.playlist.data.TrackPlayList;
-import com.tidal.playlist.exception.PlaylistException;
+import com.tidal.refactoring.playlist.dao.PlaylistDaoBean;
+import com.tidal.refactoring.playlist.data.PlayListTrack;
+import com.tidal.refactoring.playlist.data.Track;
+import com.tidal.refactoring.playlist.data.TrackPlayList;
+import com.tidal.refactoring.playlist.exception.PlaylistException;
 
 import java.util.*;
 

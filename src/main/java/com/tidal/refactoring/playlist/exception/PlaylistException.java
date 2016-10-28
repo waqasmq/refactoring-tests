@@ -1,4 +1,4 @@
-package com.tidal.playlist.exception;
+package com.tidal.refactoring.playlist.exception;
 
 /**
  * @author: eivind.hognestad@wimpmusic.com

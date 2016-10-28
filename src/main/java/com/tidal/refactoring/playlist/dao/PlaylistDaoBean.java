@@ -1,17 +1,11 @@
-package com.tidal.playlist.dao;
-
-/**
- * @author: eivind.hognestad@wimpmusic.com
- * Date: 15.04.15
- * Time: 13.07
- */
-
-import com.tidal.playlist.data.PlayListTrack;
-import com.tidal.playlist.data.SharingLevel;
-import com.tidal.playlist.data.Track;
-import com.tidal.playlist.data.TrackPlayList;
+package com.tidal.refactoring.playlist.dao;
 
 import java.util.*;
+
+import com.tidal.refactoring.playlist.data.PlayListTrack;
+import com.tidal.refactoring.playlist.data.SharingLevel;
+import com.tidal.refactoring.playlist.data.Track;
+import com.tidal.refactoring.playlist.data.TrackPlayList;
 
 /**
  * Class faking the data layer, and returning fake playlists

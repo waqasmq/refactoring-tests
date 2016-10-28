@@ -1,4 +1,4 @@
-package com.tidal.playlist.data;
+package com.tidal.refactoring.playlist.data;
 
 import java.io.Serializable;
 import java.util.Date;

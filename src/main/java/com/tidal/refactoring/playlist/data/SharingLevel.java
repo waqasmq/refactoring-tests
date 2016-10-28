@@ -1,4 +1,4 @@
-package com.tidal.playlist.data;
+package com.tidal.refactoring.playlist.data;
 
 public enum SharingLevel {
    PRIVATE, PUBLIC, KEEP;

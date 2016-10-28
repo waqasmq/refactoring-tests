@@ -1,4 +1,4 @@
-package com.tidal.playlist.data;
+package com.tidal.refactoring.playlist.data;
 
 public enum PlayListType {
     PUBLIC, PRIVATE, EDITORIAL, ARTIST, USER, RADIO;
