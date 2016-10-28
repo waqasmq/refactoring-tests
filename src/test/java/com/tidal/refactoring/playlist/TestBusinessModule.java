@@ -1,8 +1,9 @@
-package com.tidal.playlist;
+package com.tidal.refactoring.playlist;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import com.tidal.playlist.dao.PlaylistDaoBean;
+import com.tidal.refactoring.playlist.PlaylistBusinessBean;
+import com.tidal.refactoring.playlist.dao.PlaylistDaoBean;
 
 public class TestBusinessModule extends AbstractModule {
 
