@@ -14,11 +14,6 @@ import java.util.UUID;
 
 import static org.testng.AssertJUnit.assertTrue;
 
-/**
- * @author: eivind.hognestad@wimpmusic.com
- * Date: 15.04.15
- * Time: 14.32
- */
 @Guice(modules = TestBusinessModule.class)
 public class PlaylistBusinessBeanTest {
 
