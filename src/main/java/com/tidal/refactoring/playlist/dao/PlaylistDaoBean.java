@@ -1,32 +1,32 @@
 package com.tidal.refactoring.playlist.dao;
 
-import java.util.*; 
-
+import com.tidal.refactoring.playlist.data.PlayList;
 import com.tidal.refactoring.playlist.data.PlayListTrack;
 import com.tidal.refactoring.playlist.data.Track;
-import com.tidal.refactoring.playlist.data.PlayList;
+
+import java.util.*;
 
 /**
  * Class faking the data layer, and returning fake playlists
  */
 public class PlaylistDaoBean {
-	
-	private final Map<String, PlayList> playlists = new HashMap<String, PlayList>(); 
+
+    private final Map<String, PlayList> playlists = new HashMap<String, PlayList>();
 
     public PlayList getPlaylistByUUID(String uuid) {
 
-    	PlayList playList = playlists.get(uuid);
-    	
-    	if (playList != null) {
-    		return playList;
-    	}
-    	
-    	//return default playlist
+        PlayList playList = playlists.get(uuid);
+
+        if (playList != null) {
+            return playList;
+        }
+
+        //return default playlist
         return createPlayList(uuid);
     }
 
-	private PlayList createPlayList(String uuid) {
-		PlayList trackPlayList = new PlayList();
+    private PlayList createPlayList(String uuid) {
+        PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
         trackPlayList.setDuration((float) (60 * 60 * 2));
@@ -38,7 +38,7 @@ public class PlaylistDaoBean {
         trackPlayList.setUuid(uuid);
 
         return trackPlayList;
-	}
+    }
 
     private static Set<PlayListTrack> getPlaylistTracks() {
 
@@ -64,7 +64,6 @@ public class PlaylistDaoBean {
 
         int trackNumber = randomGenerator.nextInt(15);
         track.setTitle("Track no: " + trackNumber);
-        track.setTrackNumberIdx(trackNumber);
 
         return track;
     }

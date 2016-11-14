@@ -1,10 +1,8 @@
 package com.tidal.refactoring.playlist;
 
-import com.google.inject.Inject; 
-import com.tidal.refactoring.playlist.PlaylistBusinessBean;
+import com.google.inject.Inject;
 import com.tidal.refactoring.playlist.data.PlayListTrack;
 import com.tidal.refactoring.playlist.data.Track;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Guice;
@@ -44,7 +42,6 @@ public class PlaylistBusinessBeanTest {
         Track track = new Track();
         track.setArtistId(4);
         track.setTitle("A brand new track");
-        track.setTrackNumberIdx(1);
         track.setId(76868);
 
         trackList.add(track);
