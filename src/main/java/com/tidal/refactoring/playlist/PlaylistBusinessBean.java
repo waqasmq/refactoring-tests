@@ -1,11 +1,11 @@
-package com.tidal.playlist;
+package com.tidal.refactoring.playlist;
 
-import com.google.inject.Inject;
-import com.tidal.playlist.dao.PlaylistDaoBean;
-import com.tidal.playlist.data.PlayListTrack;
-import com.tidal.playlist.data.Track;
-import com.tidal.playlist.data.TrackPlayList;
-import com.tidal.playlist.exception.PlaylistException;
+import com.google.inject.Inject; 
+import com.tidal.refactoring.playlist.dao.PlaylistDaoBean;
+import com.tidal.refactoring.playlist.data.PlayListTrack;
+import com.tidal.refactoring.playlist.data.Track;
+import com.tidal.refactoring.playlist.data.PlayList;
+import com.tidal.refactoring.playlist.exception.PlaylistException;
 
 import java.util.*;
 
@@ -23,12 +23,14 @@ public class PlaylistBusinessBean {
         this.playlistDaoBean = playlistDaoBean;
     }
 
-    List<PlayListTrack> addTracks(String uuid, int userId, List<Track> tracksToAdd, int toIndex,
-                                  Date lastUpdated) throws PlaylistException {
+    /**
+     * Add tracks to the index
+     */
+    List<PlayListTrack> addTracks(String uuid, List<Track> tracksToAdd, int toIndex) throws PlaylistException {
 
         try {
 
-            TrackPlayList playList = playlistDaoBean.getPlaylistByUUID(uuid, userId);
+            PlayList playList = playlistDaoBean.getPlaylistByUUID(uuid);
 
             //We do not allow > 500 tracks in new playlists
             if (playList.getNrOfTracks() + tracksToAdd.size() > 500) {
@@ -36,8 +38,9 @@ public class PlaylistBusinessBean {
             }
 
             // The index is out of bounds, put it in the end of the list.
-            if (toIndex > playList.getPlayListTracksSize() || toIndex == -1) {
-                toIndex = playList.getPlayListTracksSize();
+            int size = playList.getPlayListTracks() == null ? 0 : playList.getPlayListTracks().size();
+            if (toIndex > size || toIndex == -1) {
+                toIndex = size;
             }
 
             if (!validateIndexes(toIndex, playList.getNrOfTracks())) {
@@ -59,8 +62,7 @@ public class PlaylistBusinessBean {
                 PlayListTrack playlistTrack = new PlayListTrack();
                 playlistTrack.setTrack(track);
                 playlistTrack.setTrackPlaylist(playList);
-                playlistTrack.setTrackArtistId(track.getArtistId());
-                playlistTrack.setDateAdded(lastUpdated);
+                playlistTrack.setDateAdded(new Date());
                 playlistTrack.setTrack(track);
                 playList.setDuration(addTrackDurationToPlaylist(playList, track));
                 original.add(toIndex, playlistTrack);
@@ -84,12 +86,20 @@ public class PlaylistBusinessBean {
             throw new PlaylistException("Generic error");
         }
     }
+    
+	/**
+	 * Remove the tracks from the playlist located at the sent indexes
+	 */
+	List<PlayListTrack> removeTracks(String uuid, List<Integer> indexes) throws PlaylistException {
+		// TODO
+		return Collections.EMPTY_LIST;
+	}
 
     private boolean validateIndexes(int toIndex, int length) {
         return toIndex >= 0 && toIndex <= length;
     }
 
-    private float addTrackDurationToPlaylist(TrackPlayList playList, Track track) {
+    private float addTrackDurationToPlaylist(PlayList playList, Track track) {
         return (track != null ? track.getDuration() : 0)
                 + (playList != null && playList.getDuration() != null ? playList.getDuration() : 0);
     }

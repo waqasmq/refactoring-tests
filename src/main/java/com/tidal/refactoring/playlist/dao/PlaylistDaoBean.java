@@ -1,47 +1,44 @@
-package com.tidal.playlist.dao;
+package com.tidal.refactoring.playlist.dao;
 
-/**
- * @author: eivind.hognestad@wimpmusic.com
- * Date: 15.04.15
- * Time: 13.07
- */
+import java.util.*; 
 
-import com.tidal.playlist.data.PlayListTrack;
-import com.tidal.playlist.data.SharingLevel;
-import com.tidal.playlist.data.Track;
-import com.tidal.playlist.data.TrackPlayList;
-
-import java.util.*;
+import com.tidal.refactoring.playlist.data.PlayListTrack;
+import com.tidal.refactoring.playlist.data.Track;
+import com.tidal.refactoring.playlist.data.PlayList;
 
 /**
  * Class faking the data layer, and returning fake playlists
  */
 public class PlaylistDaoBean {
+	
+	private final Map<String, PlayList> playlists = new HashMap<String, PlayList>(); 
 
-    /**
-     * Returning fake TrackPlaylist
-     *
-     * @param uuid
-     * @param userId
-     * @return
-     */
-    public TrackPlayList getPlaylistByUUID(String uuid, int userId) {
-        TrackPlayList trackPlayList = new TrackPlayList();
+    public PlayList getPlaylistByUUID(String uuid) {
+
+    	PlayList playList = playlists.get(uuid);
+    	
+    	if (playList != null) {
+    		return playList;
+    	}
+    	
+    	//return default playlist
+        return createPlayList(uuid);
+    }
+
+	private PlayList createPlayList(String uuid) {
+		PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
-        trackPlayList.setDescription("The mother of all playlists");
         trackPlayList.setDuration((float) (60 * 60 * 2));
         trackPlayList.setId(49834);
         trackPlayList.setLastUpdated(new Date());
         trackPlayList.setNrOfTracks(376);
         trackPlayList.setPlayListName("Collection of great songs");
         trackPlayList.setPlayListTracks(getPlaylistTracks());
-        trackPlayList.setUserId(userId);
-        trackPlayList.setSharingLevel(SharingLevel.PUBLIC);
         trackPlayList.setUuid(uuid);
 
         return trackPlayList;
-    }
+	}
 
     private static Set<PlayListTrack> getPlaylistTracks() {
 
@@ -49,10 +46,8 @@ public class PlaylistDaoBean {
         for (int i = 0; i < 376; i++) {
             PlayListTrack playListTrack = new PlayListTrack();
             playListTrack.setDateAdded(new Date());
-            playListTrack.setDescription("A description");
             playListTrack.setId(i + 1);
             playListTrack.setIndex(i);
-            playListTrack.setSharingLevel(SharingLevel.PUBLIC);
             playListTrack.setTrack(getTrack());
 
         }
