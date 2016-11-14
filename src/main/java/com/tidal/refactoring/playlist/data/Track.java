@@ -1,28 +1,15 @@
 package com.tidal.refactoring.playlist.data;
 
 
-public class Track{
+public class Track {
 
     private String title;
     private float duration;
-
-    private int trackNumberIdx;
 
     private int artistId;
     private int id;
 
     public Track() {
-    }
-
-    /**
-     * The track index in an album
-     */
-    public int getTrackNumberIdx() {
-        return this.trackNumberIdx;
-    }
-
-    public void setTrackNumberIdx(int trackNumberIdx) {
-        this.trackNumberIdx = trackNumberIdx;
     }
 
     public String getTitle() {

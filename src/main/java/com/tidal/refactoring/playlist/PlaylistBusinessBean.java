@@ -9,11 +9,6 @@ import com.tidal.refactoring.playlist.exception.PlaylistException;
 
 import java.util.*;
 
-/**
- * @author: eivind.hognestad@wimpmusic.com
- * Date: 15.04.15
- * Time: 12.45
- */
 public class PlaylistBusinessBean {
 
     private PlaylistDaoBean playlistDaoBean;

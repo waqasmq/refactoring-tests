@@ -3,17 +3,12 @@ package com.tidal.refactoring.playlist.data;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author: eivind.hognestad@wimpmusic.com
- * Date: 15.04.15
- * Time: 12.46
- */
 public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
 
     private static final long serialVersionUID = 5464240796158432162L;
 
     private Integer id;
-    private PlayList profileTrackPlayList;
+    private PlayList playlist;
     private int index;
     private Date dateAdded;
     private int trackId;
@@ -41,11 +36,11 @@ public class PlayListTrack implements Serializable, Comparable<PlayListTrack> {
     }
 
     public PlayList getTrackPlayList() {
-        return profileTrackPlayList;
+        return playlist;
     }
 
-    public void setTrackPlaylist(PlayList profileTrackPlayList) {
-        this.profileTrackPlayList = profileTrackPlayList;
+    public void setTrackPlaylist(PlayList playlist) {
+        this.playlist = playlist;
     }
 
     public Track getTrack() {
