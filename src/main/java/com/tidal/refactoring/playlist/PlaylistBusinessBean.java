@@ -26,7 +26,7 @@ public class PlaylistBusinessBean {
     /**
      * Add tracks to the index
      */
-    List<PlayListTrack> addTracks(String uuid, List<Track> tracksToAdd, int toIndex) throws PlaylistException {
+    public List<PlayListTrack> addTracks(String uuid, List<Track> tracksToAdd, int toIndex) throws PlaylistException {
 
         try {
 
@@ -56,7 +56,7 @@ public class PlaylistBusinessBean {
 	/**
 	 * Remove the tracks from the playlist located at the sent indexes
 	 */
-	List<PlayListTrack> removeTracks(String uuid, List<Integer> indexes) throws PlaylistException {
+	public List<PlayListTrack> removeTracks(String uuid, List<Integer> indexes) throws PlaylistException {
         PlayList playList =  playlistDaoBean.getPlaylistByUUID(uuid);
         List<PlayListTrack> removedTracks = new ArrayList<>();
         for (int index : indexes) {
