@@ -8,6 +8,11 @@ import com.tidal.refactoring.playlist.data.PlayList;
 import com.tidal.refactoring.playlist.exception.PlaylistException;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+/*
+
+*/
 
 public class PlaylistBusinessBean {
 
@@ -31,51 +36,17 @@ public class PlaylistBusinessBean {
             if (playList.getNrOfTracks() + tracksToAdd.size() > 500) {
                 throw new PlaylistException("Playlist cannot have more than " + 500 + " tracks");
             }
-
             // The index is out of bounds, put it in the end of the list.
             int size = playList.getPlayListTracks() == null ? 0 : playList.getPlayListTracks().size();
-            if (toIndex > size || toIndex == -1) {
+            if (toIndex > size || toIndex < 0) {
                 toIndex = size;
             }
-
-            if (!validateIndexes(toIndex, playList.getNrOfTracks())) {
-                return Collections.EMPTY_LIST;
-            }
-
-            Set<PlayListTrack> originalSet = playList.getPlayListTracks();
-            List<PlayListTrack> original;
-            if (originalSet == null || originalSet.size() == 0)
-                original = new ArrayList<PlayListTrack>();
-            else
-                original = new ArrayList<PlayListTrack>(originalSet);
-
-            Collections.sort(original);
-
             List<PlayListTrack> added = new ArrayList<PlayListTrack>(tracksToAdd.size());
-
             for (Track track : tracksToAdd) {
-                PlayListTrack playlistTrack = new PlayListTrack();
-                playlistTrack.setTrack(track);
-                playlistTrack.setTrackPlaylist(playList);
-                playlistTrack.setDateAdded(new Date());
-                playlistTrack.setTrack(track);
-                playList.setDuration(addTrackDurationToPlaylist(playList, track));
-                original.add(toIndex, playlistTrack);
-                added.add(playlistTrack);
+                added.add(addTrack(uuid, track, toIndex)); // add the track to playlist one by one.
                 toIndex++;
             }
-
-            int i = 0;
-            for (PlayListTrack track : original) {
-                track.setIndex(i++);
-            }
-
-            playList.getPlayListTracks().clear();
-            playList.getPlayListTracks().addAll(original);
-            playList.setNrOfTracks(original.size());
-
             return added;
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new PlaylistException("Generic error");
@@ -86,16 +57,59 @@ public class PlaylistBusinessBean {
 	 * Remove the tracks from the playlist located at the sent indexes
 	 */
 	List<PlayListTrack> removeTracks(String uuid, List<Integer> indexes) throws PlaylistException {
-		// TODO
-		return Collections.EMPTY_LIST;
+        PlayList playList =  playlistDaoBean.getPlaylistByUUID(uuid);
+        List<PlayListTrack> removedTracks = new ArrayList<>();
+        for (int index : indexes) {
+            PlayListTrack removedTrack = removeTrack(uuid,index);
+            if(null != removedTrack) {
+                removedTracks.add(removedTrack);
+            }
+        }
+        return removedTracks;
 	}
 
-    private boolean validateIndexes(int toIndex, int length) {
-        return toIndex >= 0 && toIndex <= length;
+    /*
+     returns playlisttrack added to the playlist
+    */
+	public PlayListTrack addTrack(String uuid, Track track, int toIndex) {
+	    PlayList playList = playlistDaoBean.getPlaylistByUUID(uuid);
+        PlayListTrack playlistTrack = new PlayListTrack();
+	    playlistTrack.setTrack(track);
+        playlistTrack.setTrackPlaylist(playList);
+        playlistTrack.setDateAdded(new Date());
+        playlistTrack.setTrack(track);
+        playList.setDuration(addTrackDurationToPlaylist(playList, track));
+        playList.getPlayListTracks().add(toIndex, playlistTrack);
+        playList.setLastUpdated(new Date());
+        return playlistTrack;
+    }
+    /*
+     returns removed to the playlist
+    */
+
+    public PlayListTrack removeTrack(String uuid , int index) {
+        PlayList playList =  playlistDaoBean.getPlaylistByUUID(uuid);
+        List<PlayListTrack> tracks = playList.getPlayListTracks();
+        PlayListTrack playListTrack = null;
+        if(index >= 0 && index < tracks.size()) { // validate the index to be removed to avoid nullpointer.
+           playListTrack =  tracks.remove(index);
+           playList.setLastUpdated(new Date());
+            subtractTrackDurationFromPlaylist(playList, playListTrack.getTrack()); // subtract the duration of removed track from the playlist duration.
+        }
+        return playListTrack;
     }
 
+    public float getPlaylistDuration(String uuid) {
+	    return playlistDaoBean.getPlaylistByUUID(uuid).getDuration();
+    }
     private float addTrackDurationToPlaylist(PlayList playList, Track track) {
         return (track != null ? track.getDuration() : 0)
                 + (playList != null && playList.getDuration() != null ? playList.getDuration() : 0);
+    }
+    private void subtractTrackDurationFromPlaylist(PlayList playList, Track track) {
+        float playListDuration = playList != null && playList.getDuration() != null ? playList.getDuration() : 0;
+        float trackDuration = track != null ? track.getDuration() : 0;
+        float remainingDuration = playListDuration - trackDuration;
+        playList.setDuration(remainingDuration);
     }
 }

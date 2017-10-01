@@ -1,23 +1,20 @@
 package com.tidal.refactoring.playlist.data;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
- * A very simplified version of TrackPlaylist
+ * No of tracks property removed. getNrOfRecords should return size of playListTracks instead.
+ *
  */
 public class PlayList {
 
     private Integer id;
     private String playListName;
-    private Set<PlayListTrack> playListTracks = new HashSet<PlayListTrack>();
+    private List<PlayListTrack> playListTracks = new ArrayList<>(); // list instead of set.
     private Date registeredDate;
     private Date lastUpdated;
     private String uuid;
-    private int nrOfTracks;
     private boolean deleted;
     private Float duration;
 
@@ -26,7 +23,7 @@ public class PlayList {
         Date d = new Date();
         this.registeredDate = d;
         this.lastUpdated = d;
-        this.playListTracks = new HashSet<PlayListTrack>();
+        this.playListTracks = new ArrayList<>();
     }
 
 
@@ -46,11 +43,11 @@ public class PlayList {
         this.playListName = playListName;
     }
 
-    public Set<PlayListTrack> getPlayListTracks() {
+    public List<PlayListTrack> getPlayListTracks() {
         return playListTracks;
     }
 
-    public void setPlayListTracks(Set<PlayListTrack> playListTracks) {
+    public void setPlayListTracks(List<PlayListTrack> playListTracks) {
         this.playListTracks = playListTracks;
     }
 
@@ -88,13 +85,8 @@ public class PlayList {
     }
 
     public int getNrOfTracks() {
-        return nrOfTracks;
+        return this.playListTracks.size(); // number of tracks is always the size of tracks list
     }
-
-    public void setNrOfTracks(int nrOfTracks) {
-        this.nrOfTracks = nrOfTracks;
-    }
-
     public Float getDuration() {
         return duration;
     }
@@ -102,5 +94,4 @@ public class PlayList {
     public void setDuration(Float duration) {
         this.duration = duration;
     }
-
 }

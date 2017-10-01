@@ -22,17 +22,18 @@ public class PlaylistDaoBean {
         }
 
         //return default playlist
-        return createPlayList(uuid);
+        playList = createPlayList(uuid);
+        playlists.put(uuid, playList); // add the playlist to the list.
+        return playList;
     }
 
     private PlayList createPlayList(String uuid) {
         PlayList trackPlayList = new PlayList();
 
         trackPlayList.setDeleted(false);
-        trackPlayList.setDuration((float) (60 * 60 * 2));
+        trackPlayList.setDuration((float) (376*180));
         trackPlayList.setId(49834);
         trackPlayList.setLastUpdated(new Date());
-        trackPlayList.setNrOfTracks(376);
         trackPlayList.setPlayListName("Collection of great songs");
         trackPlayList.setPlayListTracks(getPlaylistTracks());
         trackPlayList.setUuid(uuid);
@@ -40,16 +41,15 @@ public class PlaylistDaoBean {
         return trackPlayList;
     }
 
-    private static Set<PlayListTrack> getPlaylistTracks() {
+    private static List<PlayListTrack> getPlaylistTracks() {
 
-        Set<PlayListTrack> playListTracks = new HashSet<PlayListTrack>();
+        List<PlayListTrack> playListTracks = new ArrayList<>();
         for (int i = 0; i < 376; i++) {
             PlayListTrack playListTrack = new PlayListTrack();
             playListTrack.setDateAdded(new Date());
             playListTrack.setId(i + 1);
-            playListTrack.setIndex(i);
             playListTrack.setTrack(getTrack());
-
+            playListTracks.add(playListTrack); // add track to the list
         }
 
         return playListTracks;
